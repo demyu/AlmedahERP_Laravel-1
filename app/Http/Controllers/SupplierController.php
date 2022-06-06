@@ -149,7 +149,7 @@ class SupplierController extends Controller
         foreach ($mp as $record) {
             $pr_count = $record->receipt_count;
             if ($pr_count > 0) {
-                $pr = $record->receipt->invoice;
+                $pr = $record->receipt;
                 if (!is_null($pr->invoice)) $pi_count++;
             }
         }

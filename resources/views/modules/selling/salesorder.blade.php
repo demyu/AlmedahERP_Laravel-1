@@ -415,6 +415,13 @@
                                     <input class="form-control" type="text" id="payment_total_amount" placeholder="0.00" disabled>
                                   </td>
                                 </tr>
+                                <tr id="rowTotal">
+                                  <td></td>
+                                  <td class="font-weight-bold text-center">AMOUNT TO BE PAID:</td>
+                                  <td class="text-center">
+                                    <input class="form-control" type="number" id="AmountToPay" name="AmountToPay" placeholder="0.00" disabled>
+                                  </td>
+                                </tr>
                               </tfoot>
                             </table>
                           </div>
@@ -825,6 +832,10 @@
         formData.append("component", JSON.stringify(componentsOnly));
         formData.append("componentMaterials", JSON.stringify(componentMaterials));
         formData.append("productMaterials", JSON.stringify(productMaterials));
+        if ($('#salePaymentMethod').val() == "Installment"){
+            formData.append("amount_to_be_paid", $('#AmountToPay').val());
+            formData.append("number_of_checkbox", $('input:checkbox:checked').length);
+        }
         $.ajax({
             type: 'POST',
             url: "/createsalesorder",

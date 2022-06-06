@@ -77,7 +77,7 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="series">SQ ID</label>
-                  <select id="series" class="form-control" style="appearance:none;" disabled>
+                  <select id="series" class="form-control" style="appearance:none;" readonly>
                     <option value="">PUR-SQTN-.YYYY.-</option>
                   </select>
                 </div>
@@ -88,7 +88,7 @@
                   {{-- If a supplier quotation is being made with a specific supplier in mind,
                   render only the supplier passed as an argument in the url --}}
                   @if (isset($supplier))
-                    <select name="supplier_id" id="supplier_id" class="form-control" style="appearance:none;" disabled>
+                    <select name="supplier_id" id="supplier_id" class="form-control" style="appearance:none;" readonly>
                       <option value="{{ $supplier->supplier_id }}" 
                         data-subtext="{{ $supplier->supplier_id }}">
                         {{ $supplier->company_name }}
@@ -96,7 +96,7 @@
                     </select>
                   @else
                     <select name="supplier_id" id="supplier_id" class="form-control" style="appearance:none;"
-                    data-live-search="true" disabled>
+                    data-live-search="true" readonly>
                       @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->supplier_id }}" 
                           data-subtext="{{ $supplier->supplier_id }}">
@@ -128,7 +128,7 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="sq_status">Status</label>
-                  <select class="form-control" name="sq_status" id="sq_status" style="appearance:none;" disabled>
+                  <select class="form-control" name="sq_status" id="sq_status" style="appearance:none;" readonly>
                     @if (isset($from_email) && $from_email)
                       <option value="Submitted">Submitted</option>
                     @else

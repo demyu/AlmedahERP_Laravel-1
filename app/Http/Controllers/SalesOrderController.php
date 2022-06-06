@@ -323,6 +323,44 @@ class SalesOrderController extends Controller
                 $work_order->save();
                 array_push($work_order_ids, $work_order->id);
             }
+            
+            if ($form_data['salePaymentMethod'] == "Installment"){
+                for ($i=1; $i < $form_data['number_of_checkbox']; $i++) { 
+                    $data = salesorder::find($data->id);
+                    $payment_log = new payment_logs;
+                    $payment_log->sales_id = $data->id;
+                    $currDate = Carbon::now();
+                    $currDate = $currDate->toDateString();
+                    $payment_log->date_of_payment = $currDate;
+                    $payment_log->amount_paid = $form_data['amount_to_be_paid'] - $form_data['saleDownpaymentCost'];
+                    if($form_data['paymentType'] == "Cheque"){
+
+                        $payment_log->payment_balance = $data->payment_balance;
+                        $data->payment_balance = $payment_log->payment_balance;
+                        
+                        $payment_log->account_no = $form_data['account_no'];
+                        $payment_log->payment_status = "Pending";
+                        $payment_log->cheque_no = $form_data['cheque_no'];
+                        $payment_log->account_name = $form_data['account_name'];
+                        $payment_log->bank_name = $form_data['bank_name'];
+                        $payment_log->branch_location = $form_data['branch_location'];
+                    }else{
+                        $data->payment_balance = $data->payment_balance - $payment_log->amount_paid;
+                        $payment_log->payment_balance = $data->payment_balance;
+                        $payment_log->payment_status = "Completed";
+                    }
+                    $payment_log->payment_description = $i . ' installment';
+                    $payment_log->payment_method = $form_data['salePaymentMethod'];
+                    $payment_log->customer_rep = $form_data['lName'] . " ". $form_data['fName'];
+                    if($data->payment_balance <= 0.00){
+                        $data->sales_status = "Fully Paid";
+                    }else{
+                        $data->sales_status = "With Outstanding Balance";
+                    }
+                    $data->save();
+                    $payment_log->save();
+                }
+            }
 
             //return "Sucess";
             return response(json_encode($work_order_ids));

@@ -131,44 +131,44 @@ function installmentType() {
             "saleDownpaymentCost"
         ).value;
         $("#payments_table_body").append(
-            '<tr><td><div class="form-check"><input type="checkbox" class="form-check-input append-check"></div></td><td class="text-center">Downpayment </td><td class="text-center">' +
-                saleDownpaymentCost +
+            '<tr><td><div class="form-check"><input type="checkbox" id="downpaymentCheck" onchange="installmentOnCheck(this);" class="form-check-input append-check"></div></td><td class="text-center">Downpayment </td><td class="text-center">' +
+                parseFloat(saleDownpaymentCost).toFixed(2) +
                 "</td></tr>"
         );
         cost -= saleDownpaymentCost;
         switch (installment_type) {
             case "3 months":
                 divider = Math.round((cost * 100.0) / 3) / 100;
-                for (let index = 0; index < 3; index++) {
+                for (let index = 1; index <= 3; index++) {
                     $("#payments_table_body").append(
-                        '<tr><td><div class="form-check"><input type="checkbox" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
-                            (index + 1) +
+                        '<tr><td><div class="form-check"><input disabled type="checkbox" id="'+index+'installmentCheck" onchange="installmentOnCheck(this);" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
+                            (index) +
                             '</td><td class="text-center">' +
-                            divider +
+                            divider.toFixed(2) +
                             "</td></tr>"
                     );
                 }
                 break;
             case "6 months":
                 divider = Math.round((cost * 100.0) / 6) / 100;
-                for (let index = 0; index < 6; index++) {
+                for (let index = 1; index <= 6; index++) {
                     $("#payments_table_body").append(
-                        '<tr><td><div class="form-check"><input type="checkbox" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
-                            (index + 1) +
+                        '<tr><td><div class="form-check"><input disabled type="checkbox"  id="'+index+'installmentCheck" onchange="installmentOnCheck(this);" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
+                            (index) +
                             '</td><td class="text-center">' +
-                            divider +
+                            divider.toFixed(2) +
                             "</td></tr>"
                     );
                 }
                 break;
             case "12 months":
                 divider = Math.round((cost * 100.0) / 12) / 100;
-                for (let index = 0; index < 12; index++) {
+                for (let index = 1; index <= 12; index++) {
                     $("#payments_table_body").append(
-                        '<tr><td><div class="form-check"><input type="checkbox" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
-                            (index + 1) +
+                        '<tr><td><div class="form-check"><input disabled type="checkbox" id="'+index+'installmentCheck" onchange="installmentOnCheck(this);" class="form-check-input append-check"></div></td><td class="text-center">Installment ' +
+                            (index) +
                             '</td><td class="text-center">' +
-                            divider +
+                            divider.toFixed(2) +
                             "</td></tr>"
                     );
                 }
@@ -176,6 +176,40 @@ function installmentType() {
         }
     }
 }
+
+function installmentOnCheck(currentCheckbox){
+    if($(currentCheckbox).prop("checked")==true){
+        $(currentCheckbox).parent().parent().parent().next().find("input").prop('disabled', false);
+    }
+    else{
+        $(currentCheckbox).parent().parent().parent().nextAll().find("input").prop('checked',false);
+        $(currentCheckbox).parent().parent().parent().nextAll().find("input").prop('disabled', true);
+    }
+    var numberOfChecked =  $('input:checkbox:checked').length;
+    cost = document.getElementById("costPrice").value;
+    saleDownpaymentCost = document.getElementById("saleDownpaymentCost").value;
+    installment_type = document.getElementById("installmentType").value;
+    if(numberOfChecked>0){
+        switch (installment_type) {
+            case "3 months":
+                document.getElementById("AmountToPay").value = parseFloat(saleDownpaymentCost) + parseFloat((numberOfChecked - 1)*((cost-saleDownpaymentCost)/3));
+            break;
+            
+            case "6 months":
+                document.getElementById("AmountToPay").value = parseFloat(saleDownpaymentCost) + parseFloat((numberOfChecked - 1)*((cost-saleDownpaymentCost)/6));
+            break;
+    
+            case "12 months":
+                document.getElementById("AmountToPay").value = parseFloat(saleDownpaymentCost) + parseFloat((numberOfChecked - 1)*((cost-saleDownpaymentCost)/12));
+            break;
+        }
+    }
+    else{
+        document.getElementById("AmountToPay").value = "0.00";
+    }
+}
+
+
 
 var totalValue = 0;
 

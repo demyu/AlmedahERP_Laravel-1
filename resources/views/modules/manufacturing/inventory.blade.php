@@ -528,12 +528,12 @@
 
                         <div class="form-group col-6">
                           <label for="">Reorder Level</label>
-                          <input type="text" value="0" id="reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="reorder_level" name="reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">
                           <label for="">Reorder Quantity</label>
-                          <input type="text" value="0" id="reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="reorder_quantity" name="reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">

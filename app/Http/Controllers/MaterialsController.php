@@ -101,8 +101,8 @@ class MaterialsController extends Controller
             $data->category->quantity += $data->stock_quantity;
             $data->category->save();
             // MAKE THESE FIELDS NOT-STATIC
-            $data->reorder_level = $form_data['reorder_level'];
-            $data->reorder_qty = $form_data['reorder_quantity'];
+            $data->reorder_level = 30;
+            $data->reorder_qty = 50;
             ///////////
             $data->rm_status = $form_data['rm_status'];
             try{
@@ -181,8 +181,8 @@ class MaterialsController extends Controller
             $data->consumable = $form_data['consumable'];
             $data->category->save();
             // MAKE THESE FIELDS NOT-STATIC
-            $data->reorder_level = $form_data['edit_reorder_level'];
-            $data->reorder_qty = $form_data['edit_reorder_quantity'];
+            $data->reorder_level = 30;
+            $data->reorder_qty = 50;
             ///////////
             $data->rm_status = $form_data['rm_status'];
             $data->save();

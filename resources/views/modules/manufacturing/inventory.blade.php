@@ -379,12 +379,12 @@
 
                         <div class="form-group col-6">
                           <label for="">Reorder Level</label>
-                          <input type="text" value="0" id="edit_reorder_level" name="edit_reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="edit_reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">
                           <label for="">Reorder Quantity</label>
-                          <input type="text" value="0" id="edit_reorder_quantity" name= "edit_reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="edit_reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">
@@ -528,12 +528,12 @@
 
                         <div class="form-group col-6">
                           <label for="">Reorder Level</label>
-                          <input type="text" value="0" id="reorder_level" name="reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="reorder_level" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">
                           <label for="">Reorder Quantity</label>
-                          <input type="text" value="0" id="reorder_quantity" name="reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input type="text" value="0" id="reorder_quantity" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
 
                         <div class="form-group col-6">
@@ -751,7 +751,7 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data);
+                    console.log("success");
                     if (data.status == "success") {
                         // If a new image was set, use it as the value. Otherwise, use the old image
                         var image = (data.image) ? data.image : sessionStorage.getItem(
@@ -862,8 +862,10 @@
                 success: function(data) {
                     //console.log("success");
                     if (data.status == "success") {
+                        if(data.message){
+                            alert(data.message);
+                        }
                         if(data.already_exists){
-                            alert('Material already exists');
                             $(`#item-qty-${data.id}`).html(data.new_amount);
                             $('#create-material-form').modal('hide');
                             return;
